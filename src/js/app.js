@@ -1,10 +1,10 @@
-import './../css/app.scss'
-import { initBootstrap } from './bootstrapconfig'
+import '../css/app.scss';
+import { initBootstrap } from './bootstrapconfig';
 
 initBootstrap({
   tooltip: true,
   popover: true,
-  toasts: true
-})
+  toasts: true,
+});
 
-console.log('App initiated')
+console.log('App initiated');
