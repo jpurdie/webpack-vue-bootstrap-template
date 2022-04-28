@@ -1,6 +1,6 @@
 {
   "name": "webpack-vue-bootstrap-template",
-  "packageManager": "yarn@3.1.1",
+  "packageManager": "yarn@3.2.0",
   "version": "1.0.0",
   "description": "Template for Vue 3, Bootstrap 5, Webpack 5",
   "scripts": {
