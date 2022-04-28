@@ -1,14 +1,14 @@
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { merge } = require('webpack-merge')
-const common = require('./webpack.common.js')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { merge } = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'development',
   performance: {
-    hints: 'warning'
+    hints: 'warning',
   },
   devtool: 'source-map',
   optimization: {
@@ -17,10 +17,10 @@ module.exports = merge(common, {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          chunks: 'all'
-        }
-      }
-    }
+          chunks: 'all',
+        },
+      },
+    },
     //    minimize: false,
     //    minimizer: [
     //      (compiler) => {
@@ -40,11 +40,11 @@ module.exports = merge(common, {
     // Extracts CSS into separate files
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
-      chunkFilename: '[id].css'
+      chunkFilename: '[id].css',
     }),
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: true
-    })
-  ]
-})
+      __VUE_PROD_DEVTOOLS__: true,
+    }),
+  ],
+});

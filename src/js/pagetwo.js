@@ -1,9 +1,9 @@
-import { createApp } from 'vue/dist/vue.esm-bundler.js'
+import { createApp } from 'vue/dist/vue.esm-bundler.js';
 
 createApp({
-  data () {
+  data() {
     return {
-      count: 0
-    }
-  }
-}).mount('#app')
+      count: 0,
+    };
+  },
+}).mount('#app');

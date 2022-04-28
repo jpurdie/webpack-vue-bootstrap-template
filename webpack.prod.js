@@ -1,14 +1,14 @@
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { merge } = require('webpack-merge')
-const common = require('./webpack.common.js')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { merge } = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'production',
   performance: {
-    hints: 'warning'
+    hints: 'warning',
   },
   devtool: 'source-map',
   optimization: {
@@ -17,25 +17,25 @@ module.exports = merge(common, {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          chunks: 'all'
-        }
-      }
+          chunks: 'all',
+        },
+      },
     },
     minimize: true,
     minimizer: [
       (compiler) => {
-        const TerserPlugin = require('terser-webpack-plugin')
+        const TerserPlugin = require('terser-webpack-plugin');
         new TerserPlugin({
           extractComments: false,
           terserOptions: {
             compress: { drop_console: true },
             output: {
-              comments: false
-            }
-          }
-        }).apply(compiler)
-      }
-    ]
+              comments: false,
+            },
+          },
+        }).apply(compiler);
+      },
+    ],
   },
   plugins: [
     // Load .env file for environment variables in JS
@@ -44,11 +44,11 @@ module.exports = merge(common, {
     // Extracts CSS into separate files
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
-      chunkFilename: '[id].css'
+      chunkFilename: '[id].css',
     }),
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: true
-    })
-  ]
-})
+      __VUE_PROD_DEVTOOLS__: true,
+    }),
+  ],
+});
