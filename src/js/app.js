@@ -7,4 +7,4 @@ initBootstrap({
   toasts: true,
 });
 
-console.log('App initiated');
+console.log('App Initiated');
