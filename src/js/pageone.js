@@ -3,7 +3,7 @@ import { createApp } from 'vue/dist/vue.esm-bundler';
 createApp({
   data() {
     return {
-      count: 0,
+      email: '',
     };
   },
 }).mount('#app');

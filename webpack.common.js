@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const _ESLintPlugin = require('eslint-webpack-plugin');
 
 const ESLintPlugin = new _ESLintPlugin({
-  overrideConfigFile: path.resolve(__dirname, '.eslintrc'),
+  overrideConfigFile: path.resolve(__dirname, '.eslintrc.js'),
   context: path.resolve(__dirname, './src/js'),
   files: '**/*.js',
 });
@@ -12,6 +12,7 @@ const ESLintPlugin = new _ESLintPlugin({
 module.exports = {
   entry: {
     app: './src/js/app.js',
+    pageone: './src/js/pageone.js',
     pagetwo: './src/js/pagetwo.js',
   },
   output: {

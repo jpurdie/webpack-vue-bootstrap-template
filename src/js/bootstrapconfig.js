@@ -1,20 +1,19 @@
-import * as bootstrap from 'bootstrap';
+import { Tooltip, Toast, Popover } from 'bootstrap';
 
 /*
   Taken from: https://github.com/noreading/bootstrap5-webpack-boilerplate
 */
-
-export const initBootstrap = function (config) {
+const initBootstrap = function (config) {
   // Enabling tooltips
   if (config.tooltip) {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl, { container: 'body' }));
+    tooltipTriggerList.map((tooltipTriggerEl) => new Tooltip(tooltipTriggerEl, { container: 'body' }));
   }
 
   // Enabling popovers
   if (config.popover) {
     const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverTriggerList.map((popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl));
+    popoverTriggerList.map((popoverTriggerEl) => new Popover(popoverTriggerEl));
   }
 
   // Enabling toasts
@@ -42,7 +41,7 @@ export const initBootstrap = function (config) {
       }
 
       // Init toast
-      const toast = new bootstrap.Toast(toastTargetEl);
+      const toast = new Toast(toastTargetEl);
 
       // Add click even to trigger
       toastTriggerEl.addEventListener('click', (event) => {
@@ -53,3 +52,5 @@ export const initBootstrap = function (config) {
     });
   }
 };
+
+export default initBootstrap;

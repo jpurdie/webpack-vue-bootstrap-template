@@ -1,5 +1,5 @@
 import '../css/app.scss';
-import { initBootstrap } from './bootstrapconfig';
+import initBootstrap from './bootstrapconfig';
 
 initBootstrap({
   tooltip: true,
