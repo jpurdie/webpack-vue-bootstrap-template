@@ -16,17 +16,57 @@ module.exports = {
     pagetwo: './src/js/pagetwo.js',
   },
   output: {
-    filename: 'js/[name].min.js',
+    filename: '[name].min.js',
     path: path.resolve(__dirname, './dist'),
+    assetModuleFilename: './images/[name][ext][query]',
+    clean: true,
+    publicPath: '/dist/',
+  },
+  resolve: {
+    alias: {
+      vue$: 'vue/dist/vue.esm-bundler.js',
+    },
   },
   plugins: [
     ESLintPlugin,
+    new MiniCssExtractPlugin({
+      filename: '[name].min.css',
+      chunkFilename: '[id].css',
+    }),
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery',
+    //   jQuery: 'jquery',
+    //   'window.$': 'jquery',
+    //   'window.jQuery': 'jquery',
+    // }),
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'initial',
+        },
+      },
+    },
+  },
   module: {
     rules: [
-      // Use babel for JS files
       {
-        test: /\.m?js$/,
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(eot|woff|woff2|ttf)$/,
+        type: 'asset/resource',
+        generator: {
+          // publicPath: '../fonts/',
+          filename: 'dist/fonts/[hash][ext][query]',
+        },
+      }, // Use babel for JS files
+      {
+        test: /\.js$|jsx/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -37,10 +77,6 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-      },
       // CSS, PostCSS, and Sass
       {
         test: /\.(scss|css)$/,
@@ -49,7 +85,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 2,
+              modules: false,
               sourceMap: true,
               url: false,
             },

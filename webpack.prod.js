@@ -1,54 +1,36 @@
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const { merge } = require('webpack-merge');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
-const common = require('./webpack.common.js');
+const webpack = require('webpack');
+const common = require('./webpack.common');
 
 module.exports = merge(common, {
   mode: 'production',
+  devtool: 'source-map',
   performance: {
     hints: 'warning',
   },
-  devtool: 'source-map',
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-      },
-    },
-    minimize: true,
-    minimizer: [
-      (compiler) => {
-        const TerserPlugin = require('terser-webpack-plugin');
-        new TerserPlugin({
-          extractComments: false,
-          terserOptions: {
-            compress: { drop_console: true },
-            output: {
-              comments: false,
-            },
-          },
-        }).apply(compiler);
-      },
-    ],
-  },
   plugins: [
-    // Load .env file for environment variables in JS
-    new VueLoaderPlugin(),
-    new CleanWebpackPlugin(),
-    // Extracts CSS into separate files
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].min.css',
-      chunkFilename: '[id].css',
-    }),
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: true,
     }),
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          mangle: true,
+          compress: {
+            drop_console: true,
+            drop_debugger: true,
+          },
+          output: {
+            comments: false,
+            beautify: false,
+          },
+        },
+      }),
+    ],
+  },
 });
