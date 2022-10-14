@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="dist/app.min.css" rel="stylesheet">
-    <script defer src="dist/app.min.js"></script>
-    <script defer src="dist/vendor.min.js"></script>
+    <link href="../dist/app.css" rel="stylesheet">
+    <script defer src="../dist/app.js"></script>
+    <script defer src="../dist/vendor.js"></script>
 
     <title>Hello, world!</title>
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
       <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
@@ -97,7 +97,7 @@
               <button type="button" class="btn btn-primary" data-bs-toggle="toast" data-bs-target="#liveToast">Show live toast</button>
             </div>
             <div class="card p-2 mt-2">
-              <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+              <button type="button"  id="test-button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
                 Tooltip on top
               </button>            </div>
 

@@ -1,7 +1,7 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const { merge } = require('webpack-merge');
-const webpack = require('webpack');
 const common = require('./webpack.common');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -9,12 +9,13 @@ module.exports = merge(common, {
   performance: {
     hints: 'warning',
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: true,
-    }),
+  rules: [
+    {
+      test: /\.(css)$/,
+      use: [MiniCssExtractPlugin.loader, 'css-loader'],
+    },
   ],
+  plugins: [new MiniCssExtractPlugin()],
   optimization: {
     minimize: true,
     minimizer: [

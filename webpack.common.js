@@ -1,22 +1,14 @@
-const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const _ESLintPlugin = require('eslint-webpack-plugin');
-
-const ESLintPlugin = new _ESLintPlugin({
-  overrideConfigFile: path.resolve(__dirname, '.eslintrc.js'),
-  context: path.resolve(__dirname, './src/js'),
-  files: '**/*.js',
-});
+const EslintPlugin = require('eslint-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './src/js/app.js',
-    pageone: './src/js/pageone.js',
-    pagetwo: './src/js/pagetwo.js',
+    app: './src/app.js',
   },
   output: {
-    filename: '[name].min.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, './dist'),
     assetModuleFilename: './images/[name][ext][query]',
     clean: true,
@@ -28,17 +20,19 @@ module.exports = {
     },
   },
   plugins: [
-    ESLintPlugin,
+    new EslintPlugin({
+      overrideConfigFile: path.resolve(__dirname, '.eslintrc.js'),
+      context: path.resolve(__dirname, './src'),
+      files: '**/*.js',
+    }),
     new MiniCssExtractPlugin({
-      filename: '[name].min.css',
+      filename: '[name].css',
       chunkFilename: '[id].css',
     }),
-    // new webpack.ProvidePlugin({
-    //   $: 'jquery',
-    //   jQuery: 'jquery',
-    //   'window.$': 'jquery',
-    //   'window.jQuery': 'jquery',
-    // }),
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: true,
+    }),
   ],
   optimization: {
     splitChunks: {
@@ -64,44 +58,21 @@ module.exports = {
           // publicPath: '../fonts/',
           filename: 'dist/fonts/[hash][ext][query]',
         },
-      }, // Use babel for JS files
+      },
       {
-        test: /\.js$|jsx/,
+        test: /\.s?css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+      },
+      {
+        test: /\.m?js$|jsx/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              ['@babel/preset-env', { targets: 'defaults' }],
-            ],
+            presets: [['@babel/preset-env', { targets: 'defaults' }]],
+            plugins: ['@babel/plugin-transform-runtime'],
           },
         },
-      },
-      // CSS, PostCSS, and Sass
-      {
-        test: /\.(scss|css)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              modules: false,
-              sourceMap: true,
-              url: false,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: [
-                  'autoprefixer',
-                ],
-              },
-            },
-          },
-          'sass-loader',
-        ],
       },
     ],
   },

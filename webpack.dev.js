@@ -1,29 +1,11 @@
 const { merge } = require('webpack-merge');
-const webpack = require('webpack');
 const common = require('./webpack.common');
 
 module.exports = merge(common, {
   mode: 'development',
-  devtool: (process.env.FAST) ? false : 'eval-source-map',
+  devtool: process.env.FAST ? false : 'eval-source-map',
   performance: {
     hints: 'warning',
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: true,
-    }),
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.(json)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'data/[name][ext][query]',
-        },
-      },
-    ],
-  },
-
+  plugins: [],
 });

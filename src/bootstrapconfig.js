@@ -3,16 +3,22 @@ import { Tooltip, Toast, Popover } from 'bootstrap';
 /*
   Taken from: https://github.com/noreading/bootstrap5-webpack-boilerplate
 */
-const initBootstrap = function (config) {
+export default function initBootstrap(config) {
   // Enabling tooltips
   if (config.tooltip) {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map((tooltipTriggerEl) => new Tooltip(tooltipTriggerEl, { container: 'body' }));
+    const tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    tooltipTriggerList.map(
+      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl, { container: 'body' })
+    );
   }
 
   // Enabling popovers
   if (config.popover) {
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    const popoverTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="popover"]')
+    );
     popoverTriggerList.map((popoverTriggerEl) => new Popover(popoverTriggerEl));
   }
 
@@ -51,6 +57,4 @@ const initBootstrap = function (config) {
       return false;
     });
   }
-};
-
-export default initBootstrap;
+}
