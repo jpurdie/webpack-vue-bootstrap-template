@@ -1,1 +1,1 @@
-# eslint_tutorial
+webpack-vue-bootstrap-template
