@@ -1,7 +1,7 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { LicenseWebpackPlugin } = require('license-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -9,25 +9,33 @@ module.exports = merge(common, {
   performance: {
     hints: 'warning',
   },
-  rules: [
-    {
-      test: /\.(css)$/,
-      use: [MiniCssExtractPlugin.loader, 'css-loader'],
-    },
+  plugins: [
+    // new BundleAnalyzerPlugin(),
+    new LicenseWebpackPlugin({
+      addBanner: true,
+      renderBanner: (filename, modules) => {
+        console.log(modules);
+        return `/*! licenses are at ${filename}*/`;
+      },
+      handleMissingLicenseText: (packageName, licenseType) => {
+        console.log(`Cannot find license for ${packageName}`);
+        return 'UNKNOWN';
+      },
+    }),
   ],
-  plugins: [new MiniCssExtractPlugin()],
   optimization: {
     minimize: true,
     minimizer: [
       new TerserPlugin({
+        extractComments: false,
         terserOptions: {
           mangle: true,
+          sourceMap: true,
           compress: {
-            drop_console: true,
-            drop_debugger: true,
+            pure_funcs: ['console.log', 'console.debug'],
           },
-          output: {
-            comments: false,
+          format: {
+            comments: (astNode, comment) => comment.value.startsWith('! licenses are at '),
             beautify: false,
           },
         },
